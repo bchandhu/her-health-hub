@@ -1,10 +1,49 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @diagnostic %>
+<h1>🩺 Diagnostic Result</h1>
 
-<div>
-  <%= link_to "Edit this diagnostic", edit_diagnostic_path(@diagnostic) %> |
-  <%= link_to "Back to diagnostics", diagnostics_path %>
+<hr>
 
-  <%= button_to "Destroy this diagnostic", @diagnostic, method: :delete %>
-</div>
+<h3>🧠 PCOS Risk Level:</h3>
+<% case @diagnostic.risk_level %>
+<% when "High" %>
+  <span style="background-color: #f8d7da; color: #721c24; padding: 6px 12px; border-radius: 6px;">
+    🔴 High Risk
+  </span>
+<% when "Medium" %>
+  <span style="background-color: #fff3cd; color: #856404; padding: 6px 12px; border-radius: 6px;">
+    🟠 Medium Risk
+  </span>
+<% when "Low" %>
+  <span style="background-color: #d4edda; color: #155724; padding: 6px 12px; border-radius: 6px;">
+    🟢 Low Risk
+  </span>
+<% else %>
+  <span style="background-color: #e2e3e5; color: #6c757d; padding: 6px 12px; border-radius: 6px;">
+    ❓ Unknown
+  </span>
+<% end %>
+
+<br><br>
+
+<h3>💬 GPT Response:</h3>
+<% if @diagnostic.gpt_response.present? %>
+  <div style="background-color: #f0f0f0; padding: 15px; border-radius: 8px;">
+    <%= simple_format(@diagnostic.gpt_response) %>
+  </div>
+<% else %>
+  <p style="color: #888;">No GPT response available. You may try this again later.</p>
+<% end %>
+
+<br>
+
+<h3>📝 Quiz Summary:</h3>
+<p><%= @diagnostic.raw_input %></p>
+
+<hr>
+
+<small>Submitted on: <%= @diagnostic.created_at.strftime("%B %d, %Y at %I:%M %p") %></small>
+
+<br><br>
+<%= link_to "← Back to All Diagnostics", diagnostics_path, class: "btn btn-secondary" %>
+
