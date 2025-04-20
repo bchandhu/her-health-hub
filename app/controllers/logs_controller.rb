@@ -4,7 +4,7 @@ class LogsController < ApplicationController
 
   # GET /logs
   def index
-    @logs = current_user.calendar_entries.order(date: :desc)
+    @logs = current_user.calendar_entries
   end
 
   # GET /logs/1

@@ -21,4 +21,9 @@ class Log < ApplicationRecord
   belongs_to :user
   belongs_to :user, required: true, class_name: "User", foreign_key: "user_id"
 
+  def start_time
+    date
+  end
+  
+
 end

@@ -1,14 +1,22 @@
 <p style="color: green"><%= notice %></p>
+<h1>📅 Period Tracker</h1>
 
-<h1>Logs</h1>
+<%= month_calendar(events: @logs) do |date, logs_for_day| %>
+  <div class="day-box">
+    <strong><%= date.strftime("%-d %b") %></strong><br>
 
-<div id="logs">
-  <% @logs.each do |log| %>
-    <%= render log %>
-    <p>
-      <%= link_to "Show this log", log %>
-    </p>
-  <% end %>
-</div>
+    <% if logs_for_day.any? %>
+      <ul style="padding-left: 15px; list-style-type: disc;">
+        <% logs_for_day.each do |log| %>
+          <li>
+            <%= link_to "📝", log_path(log), title: "View Note" %>
+            <%= truncate(log.note, length: 30) %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <%= link_to "➕", new_log_path(date: date), title: "Add Note" %>
+    <% end %>
+  </div>
+<% end %>
 
-<%= link_to "New log", new_log_path %>

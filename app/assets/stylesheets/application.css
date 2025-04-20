@@ -13,3 +13,10 @@
  *= require_tree .
  *= require_self
  */
+ .day-box {
+  min-height: 80px;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: #fefefe;
+}
