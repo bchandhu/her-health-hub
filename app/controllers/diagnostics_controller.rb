@@ -1,31 +1,32 @@
 class DiagnosticsController < ApplicationController
-  before_action :set_diagnostic, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
+  before_action :set_diagnostic, only: %i[show edit update destroy]
 
-  # GET /diagnostics or /diagnostics.json
+  # GET /diagnostics
   def index
-    @diagnostics = Diagnostic.all
+    @diagnostics = current_user.diagnostic_responses.order(created_at: :desc)
   end
 
-  # GET /diagnostics/1 or /diagnostics/1.json
+  # GET /diagnostics/1
   def show
   end
 
   # GET /diagnostics/new
   def new
-    @diagnostic = Diagnostic.new
+    @diagnostic = current_user.diagnostic_responses.build
   end
 
   # GET /diagnostics/1/edit
   def edit
   end
 
-  # POST /diagnostics or /diagnostics.json
+  # POST /diagnostics
   def create
-    @diagnostic = Diagnostic.new(diagnostic_params)
+    @diagnostic = current_user.diagnostic_responses.build(diagnostic_params)
 
     respond_to do |format|
       if @diagnostic.save
-        format.html { redirect_to diagnostic_url(@diagnostic), notice: "Diagnostic was successfully created." }
+        format.html { redirect_to @diagnostic, notice: "Diagnostic was successfully created." }
         format.json { render :show, status: :created, location: @diagnostic }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -34,11 +35,11 @@ class DiagnosticsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /diagnostics/1 or /diagnostics/1.json
+  # PATCH/PUT /diagnostics/1
   def update
     respond_to do |format|
       if @diagnostic.update(diagnostic_params)
-        format.html { redirect_to diagnostic_url(@diagnostic), notice: "Diagnostic was successfully updated." }
+        format.html { redirect_to @diagnostic, notice: "Diagnostic was successfully updated." }
         format.json { render :show, status: :ok, location: @diagnostic }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -47,10 +48,9 @@ class DiagnosticsController < ApplicationController
     end
   end
 
-  # DELETE /diagnostics/1 or /diagnostics/1.json
+  # DELETE /diagnostics/1
   def destroy
-    @diagnostic.destroy!
-
+    @diagnostic.destroy
     respond_to do |format|
       format.html { redirect_to diagnostics_url, notice: "Diagnostic was successfully destroyed." }
       format.json { head :no_content }
@@ -58,13 +58,12 @@ class DiagnosticsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_diagnostic
-      @diagnostic = Diagnostic.find(params[:id])
+      @diagnostic = current_user.diagnostic_responses.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def diagnostic_params
-      params.require(:diagnostic).permit(:user_id, :raw_input, :gpt_response, :risk_level)
+      params.require(:diagnostic).permit(:raw_input, :gpt_response, :risk_level)
     end
 end
