@@ -22,7 +22,29 @@ class DiagnosticsController < ApplicationController
 
   # POST /diagnostics
   def create
-    @diagnostic = current_user.diagnostic_responses.build(diagnostic_params)
+    answers = [
+      "Periods irregular: #{params[:irregular_periods]}",
+      "Acne/oily skin: #{params[:acne]}",
+      "Weight gain: #{params[:weight_gain]}",
+      "Facial hair: #{params[:facial_hair]}",
+      "Stress level: #{params[:stress_level]}",
+      "Cycle length: #{params[:cycle_length]}",
+      "Cramp intensity: #{params[:cramp_intensity]}",
+      "Family history: #{params[:family_history]}"
+    ]
+
+    combined_input = answers.join(". ")
+
+    @diagnostic = current_user.diagnostic_responses.build(
+      raw_input: combined_input
+    )
+
+    # Call GPT
+    if @diagnostic.raw_input.present?
+      gpt_reply = GptDiagnosticService.generate_response(@diagnostic.raw_input)
+      @diagnostic.gpt_response = gpt_reply
+      @diagnostic.risk_level = extract_risk_level(gpt_reply)
+    end
 
     respond_to do |format|
       if @diagnostic.save
@@ -65,5 +87,11 @@ class DiagnosticsController < ApplicationController
 
     def diagnostic_params
       params.require(:diagnostic).permit(:raw_input, :gpt_response, :risk_level)
+    end
+
+    def extract_risk_level(response)
+      response.downcase.include?("high") ? "High" :
+      response.downcase.include?("medium") ? "Medium" :
+      response.downcase.include?("low") ? "Low" : "Unknown"
     end
 end
