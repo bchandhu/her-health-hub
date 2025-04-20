@@ -14,7 +14,9 @@ class LogsController < ApplicationController
   # GET /logs/new
   def new
     @log = current_user.calendar_entries.build
+    @log.date = params[:date] if params[:date].present?
   end
+  
 
   # GET /logs/1/edit
   def edit
