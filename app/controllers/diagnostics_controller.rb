@@ -32,20 +32,23 @@ class DiagnosticsController < ApplicationController
       "Cramp intensity: #{params[:cramp_intensity]}",
       "Family history: #{params[:family_history]}"
     ]
-
+  
     combined_input = answers.join(". ")
-
+  
     @diagnostic = current_user.diagnostic_responses.build(
       raw_input: combined_input
     )
-
-    # Call GPT
+  
     if @diagnostic.raw_input.present?
-      gpt_reply = GptDiagnosticService.generate_response(@diagnostic.raw_input)
+      chat = OpenAI::Chat.new
+      chat.system("You are a women's health assistant. Based on the user's answers, assess the risk level of PCOS as Low, Medium, or High. Respond gently and clearly.")
+      chat.user(@diagnostic.raw_input)
+      gpt_reply = chat.assistant! # This gives the final response
+  
       @diagnostic.gpt_response = gpt_reply
       @diagnostic.risk_level = extract_risk_level(gpt_reply)
     end
-
+  
     respond_to do |format|
       if @diagnostic.save
         format.html { redirect_to @diagnostic, notice: "Diagnostic was successfully created." }
@@ -56,7 +59,7 @@ class DiagnosticsController < ApplicationController
       end
     end
   end
-
+  
   # PATCH/PUT /diagnostics/1
   def update
     respond_to do |format|
@@ -94,4 +97,5 @@ class DiagnosticsController < ApplicationController
       response.downcase.include?("medium") ? "Medium" :
       response.downcase.include?("low") ? "Low" : "Unknown"
     end
+    
 end
