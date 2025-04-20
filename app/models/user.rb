@@ -22,4 +22,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+  has_many :diagnostic_responses, class_name: "Diagnostic", foreign_key: "user_id", dependent: :destroy
+  has_many :calendar_entries, class_name: "Log", foreign_key: "user_id", dependent: :destroy
+         
 end

@@ -1,0 +1,37 @@
+<%= form_with(model: diagnostic) do |form| %>
+  <% if diagnostic.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(diagnostic.errors.count, "error") %> prohibited this diagnostic from being saved:</h2>
+
+      <ul>
+        <% diagnostic.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :user_id, style: "display: block" %>
+    <%= form.text_field :user_id %>
+  </div>
+
+  <div>
+    <%= form.label :raw_input, style: "display: block" %>
+    <%= form.text_area :raw_input %>
+  </div>
+
+  <div>
+    <%= form.label :gpt_response, style: "display: block" %>
+    <%= form.text_area :gpt_response %>
+  </div>
+
+  <div>
+    <%= form.label :risk_level, style: "display: block" %>
+    <%= form.text_field :risk_level %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
