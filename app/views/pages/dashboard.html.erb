@@ -25,3 +25,24 @@
 <% else %>
   <p>You haven't logged anything yet. <%= link_to "Add a Log", new_log_path, class: "btn btn-sm btn-primary" %></p>
 <% end %>
+
+<hr>
+
+<h2>📅 Period Tracker Summary</h2>
+
+<% if @this_month_logs.any? %>
+  <p>
+    You’ve logged <strong><%= @this_month_logs.count %></strong> entry<%= 'ies' unless @this_month_logs.count == 1 %> this month.
+  </p>
+<% else %>
+  <p>You haven’t logged anything this month. <%= link_to "Start Now ➕", new_log_path %></p>
+<% end %>
+
+<% if @last_log %>
+  <p>
+    Your last note was on <strong><%= @last_log.date.strftime("%B %d") %></strong>:
+    <em>"<%= truncate(@last_log.note, length: 60) %>"</em>
+  </p>
+<% end %>
+
+<%= link_to "Go to Calendar", logs_path, class: "btn btn-outline-secondary mt-2" %>
