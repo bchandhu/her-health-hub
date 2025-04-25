@@ -5,7 +5,9 @@ Rails.application.routes.draw do
 
   get "/dashboard", to: "pages#dashboard", as: "dashboard"
 
-  resources :diagnostics
   resources :logs
-end
 
+  resources :diagnostics do
+    resources :wizard, controller: 'diagnostics/wizard'
+  end
+end

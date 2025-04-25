@@ -3,7 +3,12 @@
   <p style="font-size: 18px; color: #555;">Track your wellness. Understand your cycle. Get gentle, data-backed insights for PCOS.</p>
 
   <div style="margin-top: 30px;">
-    <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-primary", style: "margin-right: 10px;" %>
-    <%= link_to "Log In", new_user_session_path, class: "btn btn-outline-secondary" %>
+    <% if user_signed_in? %>
+      <%= link_to "Start Diagnostic ➡️", diagnostic_wizard_path(Diagnostic.create!, :cycle), class: "btn btn-primary", style: "margin-right: 10px;" %>
+      <%= link_to "Go to Dashboard", dashboard_path, class: "btn btn-outline-secondary" %>
+    <% else %>
+      <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-primary", style: "margin-right: 10px;" %>
+      <%= link_to "Log In", new_user_session_path, class: "btn btn-outline-secondary" %>
+    <% end %>
   </div>
 </div>

@@ -1,0 +1,22 @@
+<h2>Step 2 of 4: Symptoms</h2>
+
+<%= form_with model: @diagnostic, url: wizard_path, method: :patch do |form| %>
+  <div>
+    <%= form.label :acne, "Do you have acne or oily skin?" %><br>
+    <%= form.select :acne, ["Yes", "No"] %>
+  </div>
+
+  <div style="margin-top: 15px;">
+    <%= form.label :weight_gain, "Are you experiencing weight gain?" %><br>
+    <%= form.select :weight_gain, ["Yes", "No"] %>
+  </div>
+
+  <div style="margin-top: 15px;">
+    <%= form.label :facial_hair, "Do you have facial hair growth?" %><br>
+    <%= form.select :facial_hair, ["Yes", "No"] %>
+  </div>
+
+  <div style="margin-top: 25px;">
+    <%= form.submit "Next ➡️", class: "btn btn-primary" %>
+  </div>
+<% end %>

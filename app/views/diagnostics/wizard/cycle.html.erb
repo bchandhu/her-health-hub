@@ -1,0 +1,17 @@
+<h2>Step 1 of 4: Your Cycle</h2>
+
+<%= form_with model: @diagnostic, url: wizard_path, method: :patch do |form| %>
+  <div>
+    <%= form.label :irregular_periods, "Are your periods irregular?" %><br>
+    <%= form.select :irregular_periods, ["Yes", "No"] %>
+  </div>
+
+  <div style="margin-top: 15px;">
+    <%= form.label :cycle_length, "How long are your average cycles?" %><br>
+    <%= form.select :cycle_length, ["<21 days", "21–35 days", "35–60 days", "60+ days"] %>
+  </div>
+
+  <div style="margin-top: 25px;">
+    <%= form.submit "Next ➡️", class: "btn btn-primary" %>
+  </div>
+<% end %>

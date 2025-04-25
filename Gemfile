@@ -8,6 +8,8 @@ gem 'dotenv-rails'
 gem "ruby-openai"
 gem "openai-chat"
 gem 'simple_calendar'
+gem 'wicked'
+
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.3", ">= 7.1.3.2"

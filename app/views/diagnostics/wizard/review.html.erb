@@ -1,0 +1,18 @@
+<h2>Step 4 of 4: Review & Submit</h2>
+
+<p>Please confirm your answers below:</p>
+
+<ul>
+  <li><strong>Irregular Periods:</strong> <%= @diagnostic.irregular_periods %></li>
+  <li><strong>Cycle Length:</strong> <%= @diagnostic.cycle_length %></li>
+  <li><strong>Acne:</strong> <%= @diagnostic.acne %></li>
+  <li><strong>Weight Gain:</strong> <%= @diagnostic.weight_gain %></li>
+  <li><strong>Facial Hair:</strong> <%= @diagnostic.facial_hair %></li>
+  <li><strong>Stress Level:</strong> <%= @diagnostic.stress_level %></li>
+  <li><strong>Cramp Intensity:</strong> <%= @diagnostic.cramp_intensity %></li>
+  <li><strong>Family History:</strong> <%= @diagnostic.family_history %></li>
+</ul>
+
+<%= form_with model: @diagnostic, url: wizard_path, method: :patch do |form| %>
+  <%= form.submit "Submit Diagnostic ✅", class: "btn btn-success", style: "margin-top: 20px;" %>
+<% end %>

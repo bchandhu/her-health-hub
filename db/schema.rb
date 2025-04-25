@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_04_20_200243) do
+ActiveRecord::Schema[7.1].define(version: 2025_04_25_205349) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,6 +21,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_20_200243) do
     t.string "risk_level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "irregular_periods"
+    t.string "cycle_length"
+    t.string "acne"
+    t.string "weight_gain"
+    t.string "facial_hair"
+    t.string "stress_level"
+    t.string "cramp_intensity"
+    t.string "family_history"
     t.index ["user_id"], name: "index_diagnostics_on_user_id"
   end
 

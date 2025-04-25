@@ -46,3 +46,13 @@
 
   <%= link_to "Go to Calendar", logs_path, class: "btn btn-outline-secondary mt-2" %>
 </div>
+
+<div style="background-color: #fff; border: 1px solid #ddd; border-radius: 10px; padding: 20px; margin-top: 20px;">
+  <h2>🩺 Start a New Diagnostic</h2>
+  <p>Feeling different or just want to check in? Start a new assessment anytime!</p>
+
+  <div style="margin-top: 15px;">
+    <% diagnostic = current_user.diagnostic_responses.create! %>
+    <%= link_to "Start New Diagnostic ➡️", diagnostic_wizard_path(diagnostic, :cycle), class: "btn btn-success btn-lg" %>
+  </div>
+</div>
