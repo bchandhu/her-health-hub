@@ -1,3 +1,9 @@
-<h1>Welcome to HerHealth Hub 🌸</h1>
-<p>Track your wellness, assess PCOS risks, and take charge of your cycle.</p>
-<%= link_to "Get Started", new_user_registration_path, class: "btn btn-primary" %>
+<div style="text-align: center; margin-top: 60px;">
+  <h1 style="font-size: 32px;">Welcome to <strong>HerHealth Hub</strong> 🌸</h1>
+  <p style="font-size: 18px; color: #555;">Track your wellness. Understand your cycle. Get gentle, data-backed insights for PCOS.</p>
+
+  <div style="margin-top: 30px;">
+    <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-primary", style: "margin-right: 10px;" %>
+    <%= link_to "Log In", new_user_session_path, class: "btn btn-outline-secondary" %>
+  </div>
+</div>

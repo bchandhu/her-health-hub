@@ -1,53 +1,50 @@
-<h1>PCOS Risk Assessment Quiz 🌸</h1>
+<h1 style="margin-bottom: 10px;">🌸 PCOS Risk Assessment Quiz</h1>
+<p style="margin-bottom: 30px;">Answer the questions below to assess your hormonal health. Your answers will be analyzed to give you a personalized risk level.</p>
 
-<%= form_with(model: @diagnostic, local: true) do |form| %>
-  <%# We'll store the full quiz answers as raw_input after processing %>
+<%= form_with(model: @diagnostic, local: true, html: { style: "background-color: #fff; padding: 25px; border: 1px solid #ddd; border-radius: 10px;" }) do |form| %>
+  <fieldset style="border: none; padding: 0;">
+    <legend style="font-size: 18px; margin-bottom: 20px;"><strong>🩺 Cycle & Hormonal Symptoms</strong></legend>
 
-  <fieldset>
-    <legend>Cycle & Hormonal Symptoms</legend>
-
-    <div>
+    <div style="margin-bottom: 15px;">
       <%= label_tag :irregular_periods, "Are your periods irregular?" %><br>
-      <%= select_tag :irregular_periods, options_for_select(["Yes", "No"]) %>
+      <%= select_tag :irregular_periods, options_for_select(["Yes", "No"]), class: "form-control" %>
     </div>
 
-    <div>
+    <div style="margin-bottom: 15px;">
       <%= label_tag :acne, "Do you have acne or oily skin?" %><br>
       <%= select_tag :acne, options_for_select(["Yes", "No"]) %>
     </div>
 
-    <div>
+    <div style="margin-bottom: 15px;">
       <%= label_tag :weight_gain, "Are you experiencing weight gain?" %><br>
       <%= select_tag :weight_gain, options_for_select(["Yes", "No"]) %>
     </div>
 
-    <div>
+    <div style="margin-bottom: 15px;">
       <%= label_tag :facial_hair, "Do you have facial hair growth?" %><br>
       <%= select_tag :facial_hair, options_for_select(["Yes", "No"]) %>
     </div>
 
-    <div>
+    <div style="margin-bottom: 15px;">
       <%= label_tag :stress_level, "Are you often stressed?" %><br>
       <%= select_tag :stress_level, options_for_select(["Yes", "No"]) %>
     </div>
 
-    <div>
+    <div style="margin-bottom: 15px;">
       <%= label_tag :cycle_length, "How long are your average cycles?" %><br>
       <%= select_tag :cycle_length, options_for_select(["<21 days", "21–35 days", "35–60 days", "60+ days"]) %>
     </div>
 
-    <div>
+    <div style="margin-bottom: 15px;">
       <%= label_tag :cramp_intensity, "How intense are your cramps?" %><br>
       <%= select_tag :cramp_intensity, options_for_select(["None", "Mild", "Moderate", "Severe"]) %>
     </div>
 
-    <div>
+    <div style="margin-bottom: 15px;">
       <%= label_tag :family_history, "Do you have a family history of PCOS?" %><br>
       <%= select_tag :family_history, options_for_select(["Yes", "No", "Not Sure"]) %>
     </div>
   </fieldset>
 
-  <br>
-
-  <%= form.submit "Submit Diagnostic", class: "btn btn-primary" %>
+  <%= form.submit "Submit Diagnostic", class: "btn btn-primary", style: "margin-top: 20px;" %>
 <% end %>

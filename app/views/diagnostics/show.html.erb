@@ -1,49 +1,46 @@
-<p style="color: green"><%= notice %></p>
+<p style="color: green;"><%= notice %></p>
 
-<h1>🩺 Diagnostic Result</h1>
+<div style="background-color: #fff; padding: 30px; border: 1px solid #ddd; border-radius: 10px;">
 
-<hr>
+  <h1 style="margin-bottom: 10px;">🩺 Your Diagnostic Result</h1>
+  <p style="color: #888; font-size: 14px;">Submitted on: <%= @diagnostic.created_at.strftime("%B %d, %Y at %I:%M %p") %></p>
 
-<h3>🧠 PCOS Risk Level:</h3>
-<% case @diagnostic.risk_level %>
-<% when "High" %>
-  <span style="background-color: #f8d7da; color: #721c24; padding: 6px 12px; border-radius: 6px;">
-    🔴 High Risk
-  </span>
-<% when "Medium" %>
-  <span style="background-color: #fff3cd; color: #856404; padding: 6px 12px; border-radius: 6px;">
-    🟠 Medium Risk
-  </span>
-<% when "Low" %>
-  <span style="background-color: #d4edda; color: #155724; padding: 6px 12px; border-radius: 6px;">
-    🟢 Low Risk
-  </span>
-<% else %>
-  <span style="background-color: #e2e3e5; color: #6c757d; padding: 6px 12px; border-radius: 6px;">
-    ❓ Unknown
-  </span>
-<% end %>
+  <hr style="margin: 20px 0;">
 
-<br><br>
+  <h3>🧠 PCOS Risk Level:</h3>
+  <% case @diagnostic.risk_level %>
+    <% when "High" %>
+      <span style="background-color: #f8d7da; color: #721c24; padding: 8px 14px; border-radius: 8px; font-weight: bold;">
+        🔴 High Risk
+      </span>
+    <% when "Medium" %>
+      <span style="background-color: #fff3cd; color: #856404; padding: 8px 14px; border-radius: 8px; font-weight: bold;">
+        🟠 Medium Risk
+      </span>
+    <% when "Low" %>
+      <span style="background-color: #d4edda; color: #155724; padding: 8px 14px; border-radius: 8px; font-weight: bold;">
+        🟢 Low Risk
+      </span>
+    <% else %>
+      <span style="background-color: #e2e3e5; color: #6c757d; padding: 8px 14px; border-radius: 8px;">
+        ❓ Unknown
+      </span>
+  <% end %>
 
-<h3>💬 GPT Response:</h3>
-<% if @diagnostic.gpt_response.present? %>
-  <div style="background-color: #f0f0f0; padding: 15px; border-radius: 8px;">
-    <%= simple_format(@diagnostic.gpt_response) %>
-  </div>
-<% else %>
-  <p style="color: #888;">No GPT response available. You may try this again later.</p>
-<% end %>
+  <hr style="margin: 25px 0;">
 
-<br>
+  <h3>💬 GPT Response</h3>
+  <% if @diagnostic.gpt_response.present? %>
+    <div style="background-color: #f8f9fa; padding: 15px 20px; border-radius: 8px; margin-bottom: 20px;">
+      <%= simple_format(@diagnostic.gpt_response) %>
+    </div>
+  <% else %>
+    <p style="color: #999;">No AI response was recorded for this entry.</p>
+  <% end %>
 
-<h3>📝 Quiz Summary:</h3>
-<p><%= @diagnostic.raw_input %></p>
+  <h3>📝 Quiz Summary</h3>
+  <p style="white-space: pre-wrap; background-color: #f1f1f1; padding: 15px; border-radius: 8px;"><%= @diagnostic.raw_input %></p>
 
-<hr>
-
-<small>Submitted on: <%= @diagnostic.created_at.strftime("%B %d, %Y at %I:%M %p") %></small>
-
-<br><br>
-<%= link_to "← Back to All Diagnostics", diagnostics_path, class: "btn btn-secondary" %>
-
+  <br>
+  <%= link_to "← Back to Diagnostics", diagnostics_path, class: "btn btn-secondary" %>
+</div>

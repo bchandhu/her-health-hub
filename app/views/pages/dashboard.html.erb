@@ -1,48 +1,48 @@
 <h1>Welcome, <%= current_user.name %> 🌸</h1>
 
-<hr>
+<div style="background-color: #fff; border: 1px solid #ddd; border-radius: 10px; padding: 20px; margin-top: 20px;">
+  <% if @latest_diagnostic %>
+    <h2>Your Last Risk Level</h2>
+    <p>
+      <strong><%= @latest_diagnostic.risk_level %></strong><br>
+      <%= link_to "View Details", diagnostic_path(@latest_diagnostic), class: "btn btn-sm btn-outline-primary" %>
+    </p>
+  <% else %>
+    <p>No diagnostics found. <%= link_to "Take One Now", new_diagnostic_path, class: "btn btn-primary" %></p>
+  <% end %>
+</div>
 
-<% if @latest_diagnostic %>
-  <h2>Your Last Risk Level</h2>
-  <p>
-    <strong><%= @latest_diagnostic.risk_level %></strong><br>
-    <%= link_to "View Details", diagnostic_path(@latest_diagnostic), class: "btn btn-sm btn-outline-primary" %>
-  </p>
-<% else %>
-  <p>No diagnostics found. <%= link_to "Take One Now", new_diagnostic_path, class: "btn btn-primary" %></p>
-<% end %>
+<div style="background-color: #fff; border: 1px solid #ddd; border-radius: 10px; padding: 20px; margin-top: 20px;">
+  <h2>Recent Logs</h2>
+  <% if @recent_logs.any? %>
+    <ul>
+      <% @recent_logs.each do |log| %>
+        <li><strong><%= log.date.strftime("%b %d") %></strong>: <%= log.note.truncate(60) %></li>
+      <% end %>
+    </ul>
+    <%= link_to "View Full Calendar", logs_path, class: "btn btn-sm btn-secondary" %>
+  <% else %>
+    <p>You haven't logged anything yet. <%= link_to "Add a Log", new_log_path, class: "btn btn-sm btn-primary" %></p>
+  <% end %>
+</div>
 
-<hr>
+<div style="background-color: #fff; border: 1px solid #ddd; border-radius: 10px; padding: 20px; margin-top: 20px;">
+  <h2>📅 Period Tracker Summary</h2>
 
-<h2>Recent Logs</h2>
-<% if @recent_logs.any? %>
-  <ul>
-    <% @recent_logs.each do |log| %>
-      <li><strong><%= log.date.strftime("%b %d") %></strong>: <%= log.note.truncate(60) %></li>
-    <% end %>
-  </ul>
-  <%= link_to "View Full Calendar", logs_path, class: "btn btn-sm btn-secondary" %>
-<% else %>
-  <p>You haven't logged anything yet. <%= link_to "Add a Log", new_log_path, class: "btn btn-sm btn-primary" %></p>
-<% end %>
+  <% if @this_month_logs.any? %>
+    <p>
+      You’ve logged <strong><%= @this_month_logs.count %></strong> entry<%= 'ies' unless @this_month_logs.count == 1 %> this month.
+    </p>
+  <% else %>
+    <p>You haven’t logged anything this month. <%= link_to "Start Now ➕", new_log_path %></p>
+  <% end %>
 
-<hr>
+  <% if @last_log %>
+    <p>
+      Your last note was on <strong><%= @last_log.date.strftime("%B %d") %></strong>:
+      <em>"<%= truncate(@last_log.note, length: 60) %>"</em>
+    </p>
+  <% end %>
 
-<h2>📅 Period Tracker Summary</h2>
-
-<% if @this_month_logs.any? %>
-  <p>
-    You’ve logged <strong><%= @this_month_logs.count %></strong> entry<%= 'ies' unless @this_month_logs.count == 1 %> this month.
-  </p>
-<% else %>
-  <p>You haven’t logged anything this month. <%= link_to "Start Now ➕", new_log_path %></p>
-<% end %>
-
-<% if @last_log %>
-  <p>
-    Your last note was on <strong><%= @last_log.date.strftime("%B %d") %></strong>:
-    <em>"<%= truncate(@last_log.note, length: 60) %>"</em>
-  </p>
-<% end %>
-
-<%= link_to "Go to Calendar", logs_path, class: "btn btn-outline-secondary mt-2" %>
+  <%= link_to "Go to Calendar", logs_path, class: "btn btn-outline-secondary mt-2" %>
+</div>

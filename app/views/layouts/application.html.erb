@@ -10,7 +10,29 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body style="font-family: 'Helvetica Neue', sans-serif; margin: 0; padding: 0; background-color: #fdfdfd;">
+
+  <nav style="background-color: #fff; border-bottom: 1px solid #ddd; padding: 10px 20px;">
+    <strong style="font-size: 18px;">HerHealth Hub 🌸</strong>
+
+    <% if user_signed_in? %>
+      <span style="float: right;">
+        <%= link_to "Dashboard", dashboard_path, style: "margin-right: 15px;" %>
+        <%= link_to "Logs", logs_path, style: "margin-right: 15px;" %>
+        <%= link_to "Diagnostics", diagnostics_path, style: "margin-right: 15px;" %>
+        <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+      </span>
+    <% else %>
+      <span style="float: right;">
+        <%= link_to "Sign Up", new_user_registration_path, style: "margin-right: 15px;" %>
+        <%= link_to "Login", new_user_session_path %>
+      </span>
+    <% end %>
+  </nav>
+
+  <div style="max-width: 800px; margin: 30px auto; padding: 0 15px;">
     <%= yield %>
-  </body>
+  </div>
+</body>
+
 </html>
