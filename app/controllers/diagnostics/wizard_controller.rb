@@ -48,8 +48,48 @@ class Diagnostics::WizardController < ApplicationController
       "Family history: #{@diagnostic.family_history}"
     ]
 
-    @diagnostic.raw_input = answers.join(". ")
-    @diagnostic.risk_level = "Medium" # placeholder
+    combined_input = answers.join(". ")
+    @diagnostic.raw_input = combined_input
+
+    prompt = <<~PROMPT
+      You are a womens health assistant. Based on the users answers, assess the risk level of PCOS as Low, Medium, or High.
+      Respond gently and clearly.
+
+      Users answers: #{combined_input}
+    PROMPT
+
+    begin
+      client = OpenAI::Client.new(access_token: ENV["OPENAI_API_KEY"])
+
+      response = client.chat(
+        parameters: {
+          model: "gpt-3.5-turbo",
+          messages: [
+            { role: "system", content: "You are a compassionate PCOS risk assistant." },
+            { role: "user", content: prompt }
+          ],
+          temperature: 0.7
+        }
+      )
+
+      gpt_reply = response.dig("choices", 0, "message", "content")
+      @diagnostic.gpt_response = gpt_reply
+      @diagnostic.risk_level = extract_risk_level(gpt_reply)
+    rescue => e
+      @diagnostic.gpt_response = "Sorry, GPT could not process your request."
+      @diagnostic.risk_level = "Unknown"
+      Rails.logger.error("GPT error: #{e.message}")
+    end
+
     @diagnostic.save!
+  end
+
+  def extract_risk_level(response)
+    case response.downcase
+    when /high/ then "High"
+    when /medium/ then "Medium"
+    when /low/ then "Low"
+    else "Unknown"
+    end
   end
 end

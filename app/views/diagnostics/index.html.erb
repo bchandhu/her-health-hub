@@ -1,14 +1,27 @@
-<p style="color: green"><%= notice %></p>
+<h1>🩺 Your Diagnostics</h1>
 
-<h1>Diagnostics</h1>
-
-<div id="diagnostics">
+<div style="margin-top: 20px;">
   <% @diagnostics.each do |diagnostic| %>
-    <%= render diagnostic %>
-    <p>
-      <%= link_to "Show this diagnostic", diagnostic %>
-    </p>
+    <div style="background-color: #fff; border: 1px solid #ddd; padding: 15px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+
+      <p><strong>Submitted on:</strong> <%= diagnostic.created_at.strftime("%B %d, %Y at %I:%M %p") %></p>
+
+      <p><strong>Risk Level:</strong>
+        <% case diagnostic.risk_level %>
+          <% when "High" %>
+            <span style="background-color: #f8d7da; color: #721c24; padding: 5px 10px; border-radius: 8px;">🔴 High</span>
+          <% when "Medium" %>
+            <span style="background-color: #fff3cd; color: #856404; padding: 5px 10px; border-radius: 8px;">🟠 Medium</span>
+          <% when "Low" %>
+            <span style="background-color: #d4edda; color: #155724; padding: 5px 10px; border-radius: 8px;">🟢 Low</span>
+          <% else %>
+            <span style="background-color: #e2e3e5; color: #6c757d; padding: 5px 10px; border-radius: 8px;">❓ Unknown</span>
+        <% end %>
+      </p>
+
+      <%= link_to "View Diagnostic ➔", diagnostic_path(diagnostic), class: "btn btn-outline-primary btn-sm" %>
+    </div>
   <% end %>
 </div>
 
-<%= link_to "New diagnostic", new_diagnostic_path %>
+<%= link_to "➕ Start New Diagnostic", dashboard_path, class: "btn btn-success" %>

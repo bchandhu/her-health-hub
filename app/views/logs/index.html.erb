@@ -2,20 +2,26 @@
 <h1>📅 Period Tracker</h1>
 
 <%= month_calendar(events: @logs) do |date, logs_for_day| %>
-  <div class="day-box">
-    <strong><%= date.strftime("%-d %b") %></strong><br>
+  <div class="day-box" style="height: 120px; padding: 5px; border: 1px solid #ddd; border-radius: 8px;">
+    <div style="font-weight: bold;">
+      <%= date.strftime("%-d %b") %>
+      <% if date == Date.today %> 
+        <span style="color: red;">(Today)</span> 
+      <% end %>
+    </div>
 
     <% if logs_for_day.any? %>
-      <ul style="padding-left: 15px; list-style-type: disc;">
+      <ul style="padding-left: 5px; font-size: 12px; margin-top: 5px; list-style: none;">
         <% logs_for_day.each do |log| %>
-          <li>
-            <%= link_to "📝", log_path(log), title: "View Note" %>
-            <%= truncate(log.note, length: 30) %>
+          <li style="margin-top: 3px;">
+            📓 <%= link_to truncate(log.note, length: 20), log_path(log), style: "text-decoration: none; color: #333;" %>
           </li>
         <% end %>
       </ul>
     <% else %>
-      <%= link_to "➕", new_log_path(date: date), title: "Add Note" %>
+      <div style="margin-top: 10px;">
+        <%= link_to "➕ Add", new_log_path(date: date), style: "font-size: 12px; text-decoration: none;" %>
+      </div>
     <% end %>
   </div>
 <% end %>

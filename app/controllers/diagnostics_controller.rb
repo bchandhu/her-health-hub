@@ -34,21 +34,13 @@ class DiagnosticsController < ApplicationController
     ]
   
     combined_input = answers.join(". ")
-  
-    @diagnostic = current_user.diagnostic_responses.build(
-      raw_input: combined_input
-    )
-  
+
+    @diagnostic = current_user.diagnostic_responses.build(raw_input: combined_input)
+
     if @diagnostic.raw_input.present?
-      chat = OpenAI::Chat.new
-      chat.system("You are a women's health assistant. Based on the user's answers, assess the risk level of PCOS as Low, Medium, or High. Respond gently and clearly.")
-      chat.user(@diagnostic.raw_input)
-      gpt_reply = chat.assistant! # This gives the final response
-  
-      @diagnostic.gpt_response = gpt_reply
-      @diagnostic.risk_level = extract_risk_level(gpt_reply)
+      # GPT code (but your wizard now handles GPT separately so this is old create path)
     end
-  
+
     respond_to do |format|
       if @diagnostic.save
         format.html { redirect_to @diagnostic, notice: "Diagnostic was successfully created." }
@@ -97,5 +89,4 @@ class DiagnosticsController < ApplicationController
       response.downcase.include?("medium") ? "Medium" :
       response.downcase.include?("low") ? "Low" : "Unknown"
     end
-    
 end

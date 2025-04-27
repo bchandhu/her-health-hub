@@ -1,10 +1,14 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @log %>
+<div style="background-color: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+  <h2>📝 Log Details</h2>
 
-<div>
-  <%= link_to "Edit this log", edit_log_path(@log) %> |
-  <%= link_to "Back to logs", logs_path %>
+  <p><strong>Date:</strong> <%= @log.date.strftime("%B %d, %Y") %></p>
+  <p><strong>Note:</strong> <%= @log.note.presence || "(No note provided)" %></p>
+</div>
 
-  <%= button_to "Destroy this log", @log, method: :delete %>
+<div style="display: flex; gap: 10px;">
+  <%= link_to "✏️ Edit Log", edit_log_path(@log), class: "btn btn-outline-primary btn-sm" %>
+  <%= link_to "🔙 Back to Calendar", logs_path, class: "btn btn-outline-secondary btn-sm" %>
+  <%= button_to "🗑️ Delete Log", @log, method: :delete, data: { confirm: "Are you sure you want to delete this log?" }, class: "btn btn-danger btn-sm" %>
 </div>
