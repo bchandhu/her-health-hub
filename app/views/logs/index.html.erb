@@ -1,27 +1,30 @@
 <p style="color: green"><%= notice %></p>
+
 <h1>📅 Period Tracker</h1>
 
-<%= month_calendar(events: @logs) do |date, logs_for_day| %>
-  <div class="day-box" style="height: 120px; padding: 5px; border: 1px solid #ddd; border-radius: 8px;">
-    <div style="font-weight: bold;">
-      <%= date.strftime("%-d %b") %>
-      <% if date == Date.today %> 
-        <span style="color: red;">(Today)</span> 
+<div class="calendar-wrapper">
+  <%= month_calendar(events: @logs) do |date, logs_for_day| %>
+    <div class="day-box <%= 'today' if date == Date.today %>">
+      <div class="date-heading">
+        <%= date.strftime("%-d %b") %>
+        <% if date == Date.today %>
+          <span class="today-badge">Today</span>
+        <% end %>
+      </div>
+
+      <% if logs_for_day.any? %>
+        <ul class="logs-list">
+          <% logs_for_day.each do |log| %>
+            <li>
+              📓 <%= link_to truncate(log.note, length: 18), log_path(log), class: "log-link" %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <div class="add-log-btn">
+          <%= link_to "+ Add", new_log_path(date: date), class: "add-button" %>
+        </div>
       <% end %>
     </div>
-
-    <% if logs_for_day.any? %>
-      <ul style="padding-left: 5px; font-size: 12px; margin-top: 5px; list-style: none;">
-        <% logs_for_day.each do |log| %>
-          <li style="margin-top: 3px;">
-            📓 <%= link_to truncate(log.note, length: 20), log_path(log), style: "text-decoration: none; color: #333;" %>
-          </li>
-        <% end %>
-      </ul>
-    <% else %>
-      <div style="margin-top: 10px;">
-        <%= link_to "➕ Add", new_log_path(date: date), style: "font-size: 12px; text-decoration: none;" %>
-      </div>
-    <% end %>
-  </div>
-<% end %>
+  <% end %>
+</div>
