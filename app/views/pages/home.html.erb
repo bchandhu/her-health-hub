@@ -1,14 +1,14 @@
-<div style="text-align: center; margin-top: 60px;">
-  <h1 style="font-size: 32px;">Welcome to <strong>HerHealth Hub</strong> 🌸</h1>
-  <p style="font-size: 18px; color: #555;">Track your wellness. Understand your cycle. Get gentle, data-backed insights for PCOS.</p>
+<div style="text-align: center; margin-top: 80px;">
+  <h1 style="font-size: 36px; font-weight: bold; margin-bottom: 20px;">Welcome to <span style="color: #6f42c1;">HerHealth Hub</span> 🌸</h1>
+  <p style="font-size: 20px; color: #555;">Track your wellness. Understand your cycle. Get gentle, AI-powered insights for PCOS management.</p>
 
-  <div style="margin-top: 30px;">
+  <div style="margin-top: 40px; display: flex; justify-content: center; gap: 20px;">
     <% if user_signed_in? %>
-      <%= link_to "Start Diagnostic ➡️", diagnostic_wizard_path(Diagnostic.create!, :cycle), class: "btn btn-primary", style: "margin-right: 10px;" %>
-      <%= link_to "Go to Dashboard", dashboard_path, class: "btn btn-outline-secondary" %>
+      <%= link_to "Start New Diagnostic ➡️", diagnostic_wizard_path(Diagnostic.create!, :cycle), class: "btn btn-primary", style: "padding: 10px 20px; background-color: #6f42c1; color: white; text-decoration: none; border-radius: 8px;" %>
+      <%= link_to "Go to Dashboard", dashboard_path, class: "btn btn-outline-secondary", style: "padding: 10px 20px; border: 2px solid #6f42c1; color: #6f42c1; text-decoration: none; border-radius: 8px;" %>
     <% else %>
-      <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-primary", style: "margin-right: 10px;" %>
-      <%= link_to "Log In", new_user_session_path, class: "btn btn-outline-secondary" %>
+      <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-primary", style: "padding: 10px 20px; background-color: #6f42c1; color: white; text-decoration: none; border-radius: 8px;" %>
+      <%= link_to "Log In", new_user_session_path, class: "btn btn-outline-secondary", style: "padding: 10px 20px; border: 2px solid #6f42c1; color: #6f42c1; text-decoration: none; border-radius: 8px;" %>
     <% end %>
   </div>
 </div>
