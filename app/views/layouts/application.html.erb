@@ -14,9 +14,8 @@
 <body style="font-family: 'Poppins', sans-serif; margin: 0; padding: 0; background: linear-gradient(to right, #fdfbfb, #ebedee);">
 
   <nav class="navbar" style="background-color: #ffffff; border-bottom: 1px solid #ddd; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
-    <div style="font-size: 20px; font-weight: bold;">
-      HerHealth Hub 🌸
-    </div>
+    <%= link_to "HerHealth Hub 🌸", dashboard_path, style: "text-decoration: none; font-weight: bold; font-size: 24px; color: black;" %>
+
 
     <div style="display: flex; gap: 20px; font-size: 16px;">
       <% if user_signed_in? %>
