@@ -2,16 +2,19 @@
 
 <div class="dashboard-grid">
 
+  <!-- Diagnostic Status Card -->
   <div class="dashboard-card">
     <h2>🩺 Diagnostic Status</h2>
     <% if @latest_diagnostic %>
       <p>Latest risk level: <strong><%= @latest_diagnostic.risk_level %></strong></p>
       <%= link_to "View Details ➔", diagnostic_path(@latest_diagnostic), class: "btn-primary" %>
     <% else %>
-      <p>No diagnostics found. <%= link_to "Take One Now ➔", new_diagnostic_path, class: "btn-primary" %></p>
+      <p>No diagnostics found.</p>
+      <%= button_to "Start New Diagnostic ➔", start_new_diagnostic_diagnostics_path, method: :post, class: "btn-success", style: "margin-top: 10px;" %>
     <% end %>
   </div>
 
+  <!-- Recent Logs Card -->
   <div class="dashboard-card">
     <h2>📝 Recent Logs</h2>
     <% if @recent_logs.any? %>
@@ -22,26 +25,29 @@
       </ul>
       <%= link_to "View Full Calendar ➔", logs_path, class: "btn-secondary" %>
     <% else %>
-      <p>You haven't logged anything yet. <%= link_to "Add a Log ➔", new_log_path, class: "btn-primary" %></p>
+      <p>You haven't logged anything yet.</p>
+      <%= link_to "Add a Log ➔", new_log_path, class: "btn-primary" %>
     <% end %>
   </div>
 
+  <!-- Period Tracker Summary Card -->
   <div class="dashboard-card">
     <h2>📅 Period Tracker Summary</h2>
     <% if @this_month_logs.any? %>
       <p>You've logged <strong><%= @this_month_logs.count %></strong> entries this month.</p>
     <% else %>
-      <p>No logs this month. <%= link_to "Start Now ➔", new_log_path, class: "btn-primary" %></p>
+      <p>No logs this month.</p>
+      <%= link_to "Start Now ➔", new_log_path, class: "btn-primary" %>
     <% end %>
     <%= link_to "Go to Calendar ➔", logs_path, class: "btn-secondary", style: "margin-top: 10px;" %>
   </div>
 
+  <!-- Start New Diagnostic Card -->
   <div class="dashboard-card">
     <h2>🌸 Start a New Diagnostic</h2>
     <p>Feeling different or just want to check in? Start a new assessment anytime!</p>
     <div style="margin-top: 15px;">
-      <% diagnostic = current_user.diagnostic_responses.create! %>
-      <%= link_to "Start New Diagnostic ➔", diagnostic_wizard_path(diagnostic, :cycle), class: "btn-success" %>
+      <%= button_to "Start New Diagnostic ➔", start_new_diagnostic_diagnostics_path, method: :post, class: "btn-success", style: "margin-top: 10px;" %>
     </div>
   </div>
 

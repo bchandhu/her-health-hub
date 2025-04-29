@@ -11,7 +11,13 @@ class DiagnosticsController < ApplicationController
   def show
   end
 
-  # GET /diagnostics/new
+  # POST /start_new_diagnostic
+  def start_new_diagnostic
+    diagnostic = current_user.diagnostic_responses.create!
+    redirect_to diagnostic_wizard_path(diagnostic, :cycle)
+  end
+
+  # GET /diagnostics/new (not used now, but keeping)
   def new
     @diagnostic = current_user.diagnostic_responses.build
   end
@@ -22,24 +28,7 @@ class DiagnosticsController < ApplicationController
 
   # POST /diagnostics
   def create
-    answers = [
-      "Periods irregular: #{params[:irregular_periods]}",
-      "Acne/oily skin: #{params[:acne]}",
-      "Weight gain: #{params[:weight_gain]}",
-      "Facial hair: #{params[:facial_hair]}",
-      "Stress level: #{params[:stress_level]}",
-      "Cycle length: #{params[:cycle_length]}",
-      "Cramp intensity: #{params[:cramp_intensity]}",
-      "Family history: #{params[:family_history]}"
-    ]
-  
-    combined_input = answers.join(". ")
-
-    @diagnostic = current_user.diagnostic_responses.build(raw_input: combined_input)
-
-    if @diagnostic.raw_input.present?
-      # GPT code (but your wizard now handles GPT separately so this is old create path)
-    end
+    @diagnostic = current_user.diagnostic_responses.build(diagnostic_params)
 
     respond_to do |format|
       if @diagnostic.save
@@ -51,7 +40,7 @@ class DiagnosticsController < ApplicationController
       end
     end
   end
-  
+
   # PATCH/PUT /diagnostics/1
   def update
     respond_to do |format|
@@ -82,11 +71,5 @@ class DiagnosticsController < ApplicationController
 
     def diagnostic_params
       params.require(:diagnostic).permit(:raw_input, :gpt_response, :risk_level)
-    end
-
-    def extract_risk_level(response)
-      response.downcase.include?("high") ? "High" :
-      response.downcase.include?("medium") ? "Medium" :
-      response.downcase.include?("low") ? "Low" : "Unknown"
     end
 end
