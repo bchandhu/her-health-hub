@@ -3,7 +3,8 @@
 <div style="background-color: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
   <h2>📝 Log Details</h2>
 
-  <p><strong>Date:</strong> <%= @log.date.strftime("%B %d, %Y") %></p>
+  <p><strong>Date:</strong> <%= @log.date.present? ? @log.date.strftime("%B %d, %Y") : "Not available" %></p>
+
   <p><strong>Note:</strong> <%= @log.note.presence || "(No note provided)" %></p>
 </div>
 

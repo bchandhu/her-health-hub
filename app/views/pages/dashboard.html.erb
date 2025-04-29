@@ -16,19 +16,24 @@
 
   <!-- Recent Logs Card -->
   <div class="dashboard-card">
-    <h2>📝 Recent Logs</h2>
-    <% if @recent_logs.any? %>
-      <ul>
-        <% @recent_logs.each do |log| %>
-          <li><strong><%= log.date.strftime("%b %d") %>:</strong> <%= truncate(log.note, length: 50) %></li>
-        <% end %>
-      </ul>
-      <%= link_to "View Full Calendar ➔", logs_path, class: "btn-secondary" %>
-    <% else %>
-      <p>You haven't logged anything yet.</p>
-      <%= link_to "Add a Log ➔", new_log_path, class: "btn-primary" %>
-    <% end %>
-  </div>
+  <h2>📝 Recent Logs</h2>
+  <% if @recent_logs.any? %>
+    <ul>
+      <% @recent_logs.each do |log| %>
+        <li>
+          <strong>
+            <%= log.date.present? ? log.date.strftime("%b %d") : "Date missing" %>
+          </strong>: 
+          <%= truncate(log.note, length: 50) %>
+        </li>
+      <% end %>
+    </ul>
+    <%= link_to "View Full Calendar ➔", logs_path, class: "btn-secondary" %>
+  <% else %>
+    <p>You haven't logged anything yet.</p>
+    <%= link_to "Add a Log ➔", new_log_path, class: "btn-primary" %>
+  <% end %>
+</div>
 
   <!-- Period Tracker Summary Card -->
   <div class="dashboard-card">
