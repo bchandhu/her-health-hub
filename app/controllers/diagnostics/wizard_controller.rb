@@ -1,3 +1,5 @@
+require "openai"
+require "dotenv/load"
 class Diagnostics::WizardController < ApplicationController
   include Wicked::Wizard
 
@@ -14,9 +16,13 @@ class Diagnostics::WizardController < ApplicationController
     @diagnostic.assign_attributes(diagnostic_params)
     @diagnostic.user = current_user
 
-    process_raw_input_and_gpt if step == steps.last
-
-    render_wizard @diagnostic
+    if step == steps.last
+      process_raw_input_and_gpt
+      @diagnostic.save!
+      redirect_to diagnostic_path(@diagnostic) and return
+    else
+      render_wizard @diagnostic
+    end
   end
 
   private
@@ -26,7 +32,6 @@ class Diagnostics::WizardController < ApplicationController
   end
 
   def diagnostic_params
-    # Only require if present (for review step, it's empty)
     return {} unless params[:diagnostic]
 
     params.require(:diagnostic).permit(
@@ -47,43 +52,38 @@ class Diagnostics::WizardController < ApplicationController
       "Cramp intensity: #{@diagnostic.cramp_intensity}",
       "Family history: #{@diagnostic.family_history}"
     ]
-
+  
     combined_input = answers.join(". ")
     @diagnostic.raw_input = combined_input
-
-    prompt = <<~PROMPT
-      You are a womens health assistant. Based on the users answers, assess the risk level of PCOS as Low, Medium, or High.
-      Respond gently and clearly.
-
-      Users answers: #{combined_input}
-    PROMPT
-
+  
+    client = OpenAI::Client.new
+  
     begin
-      client = OpenAI::Client.new(access_token: ENV["OPENAI_API_KEY"])
-
       response = client.chat(
         parameters: {
           model: "gpt-3.5-turbo",
           messages: [
-            { role: "system", content: "You are a compassionate PCOS risk assistant." },
-            { role: "user", content: prompt }
+            { role: "system", content: "You are a compassionate women's health assistant." },
+            { role: "user", content: "Analyze these symptoms and assess PCOS risk level: #{combined_input}" }
           ],
           temperature: 0.7
         }
       )
-
+  
       gpt_reply = response.dig("choices", 0, "message", "content")
       @diagnostic.gpt_response = gpt_reply
       @diagnostic.risk_level = extract_risk_level(gpt_reply)
+  
     rescue => e
       @diagnostic.gpt_response = "Sorry, GPT could not process your request."
       @diagnostic.risk_level = "Unknown"
       Rails.logger.error("GPT error: #{e.message}")
     end
-
+  
     @diagnostic.save!
   end
-
+  
+  
   def extract_risk_level(response)
     case response.downcase
     when /high/ then "High"

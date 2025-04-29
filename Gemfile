@@ -6,10 +6,10 @@ ruby "3.2.1"
 gem 'devise'
 gem 'dotenv-rails'
 gem "ruby-openai"
-gem "openai-chat"
 gem 'simple_calendar'
 gem "openai"
 gem 'wicked'
+
 
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
