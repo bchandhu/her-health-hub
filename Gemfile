@@ -8,6 +8,7 @@ gem 'dotenv-rails'
 gem "ruby-openai"
 gem 'simple_calendar'
 gem "openai"
+
 gem 'wicked'
 
 

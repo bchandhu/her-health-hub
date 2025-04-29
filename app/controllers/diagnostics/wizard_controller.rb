@@ -56,7 +56,7 @@ class Diagnostics::WizardController < ApplicationController
     combined_input = answers.join(". ")
     @diagnostic.raw_input = combined_input
   
-    client = OpenAI::Client.new
+    client = OpenAI::Client.new(access_token: ENV.fetch("OPENAI_ACCESS_TOKEN"))
   
     begin
       response = client.chat(
@@ -66,7 +66,6 @@ class Diagnostics::WizardController < ApplicationController
             { role: "system", content: "You are a compassionate women's health assistant." },
             { role: "user", content: "Analyze these symptoms and assess PCOS risk level: #{combined_input}" }
           ],
-          temperature: 0.7
         }
       )
   
