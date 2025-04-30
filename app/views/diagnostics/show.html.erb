@@ -39,8 +39,9 @@
     <p><strong>Family history of PCOS:</strong> <%= @diagnostic.family_history %></p>
   </div>
 
-  <div style="margin-top: 30px; text-align: left;">
+  <div style="margin-top: 30px; display: flex; gap: 12px; flex-wrap: wrap;">
     <%= link_to "⬅ Back to Diagnostics", diagnostics_path, class: "btn btn-outline-secondary" %>
+    <%= link_to "📄 Download Report as PDF", report_diagnostic_path(@diagnostic, format: :pdf), class: "btn btn-success" %>
   </div>
 </div>
 

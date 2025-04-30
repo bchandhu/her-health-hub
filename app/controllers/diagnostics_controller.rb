@@ -63,6 +63,19 @@ class DiagnosticsController < ApplicationController
     end
   end
 
+  def report
+    @diagnostic = current_user.diagnostic_responses.find(params[:id])
+  
+    respond_to do |format|
+      format.pdf do
+        render pdf: "PCOS_Report_#{@diagnostic.id}",
+               template: "diagnostics/report",
+               layout: false,
+               encoding: "UTF-8"
+      end
+    end
+  end
+
   private
 
     def set_diagnostic
