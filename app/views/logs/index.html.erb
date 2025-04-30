@@ -1,28 +1,28 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>📅 Period Tracker</h1>
+<h1 style="text-align: center; font-size: 28px; margin-bottom: 20px;">📅 Period Tracker</h1>
 
 <div class="calendar-wrapper">
   <%= month_calendar(events: @logs) do |date, logs_for_day| %>
-    <div class="day-box <%= 'today' if date == Date.today %>">
-      <div class="date-heading">
-        <%= date.strftime("%-d %b") %>
+    <div class="calendar-day <%= 'today' if date == Date.today %>">
+      <div class="calendar-date">
+        <span><%= date.strftime("%-d %b") %></span>
         <% if date == Date.today %>
-          <span class="today-badge">Today</span>
+          <span class="today-pill">Today</span>
         <% end %>
       </div>
 
       <% if logs_for_day.any? %>
-        <ul class="logs-list">
+        <ul class="log-entries">
           <% logs_for_day.each do |log| %>
             <li>
-              📓 <%= link_to truncate(log.note, length: 18), log_path(log), class: "log-link" %>
+              📓 <%= link_to truncate(log.note, length: 20), log_path(log), class: "log-entry" %>
             </li>
           <% end %>
         </ul>
       <% else %>
-        <div class="add-log-btn">
-          <%= link_to "+ Add", new_log_path(date: date), class: "add-button" %>
+        <div class="add-log-wrapper">
+          <%= link_to "+ Add", new_log_path(date: date), class: "add-log-button" %>
         </div>
       <% end %>
     </div>

@@ -201,3 +201,72 @@ h1 {
 .add-button:hover {
   background: linear-gradient(90deg, #e100ff, #7f00ff);
 }
+.calendar-wrapper {
+  margin-top: 30px;
+  padding: 0 10px;
+}
+
+.calendar-day {
+  min-height: 130px;
+  padding: 8px;
+  border-radius: 10px;
+  background: white;
+  border: 1px solid #eee;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.calendar-day.today {
+  border: 2px solid #d63384;
+  background: #fff0f6;
+}
+
+.calendar-date {
+  font-weight: bold;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.today-pill {
+  background-color: #d63384;
+  color: white;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 12px;
+  margin-left: 5px;
+}
+
+.add-log-button {
+  background-color: #a408e6;
+  color: white;
+  border: none;
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.add-log-button:hover {
+  background-color: #8900c2;
+}
+
+.log-entries {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 8px;
+}
+
+.log-entry {
+  font-size: 13px;
+  color: #333;
+  text-decoration: none;
+}
+
+.log-entry:hover {
+  color: #d63384;
+}
