@@ -1,0 +1,40 @@
+<h1>HerHealth Hub 🌸 — Diagnostic Report</h1>
+<p><strong>User:</strong> <%= current_user.full_name %> | <%= current_user.email %></p>
+<p><strong>Generated on:</strong> <%= Time.current.strftime("%B %d, %Y at %I:%M %p") %></p>
+
+<div class="section">
+  <h2>🧠 PCOS Risk Level</h2>
+  <p><strong>Status:</strong> <%= @diagnostic.risk_level %></p>
+</div>
+
+<div class="section">
+  <h2>💬 GPT Summary</h2>
+  <p><%= simple_format(@diagnostic.gpt_response) %></p>
+</div>
+
+<div class="section">
+  <h2>📝 Quiz Summary</h2>
+  <ul>
+    <li>Irregular Periods: <%= @diagnostic.irregular_periods %></li>
+    <li>Cycle Length: <%= @diagnostic.cycle_length %></li>
+    <li>Acne: <%= @diagnostic.acne %></li>
+    <li>Weight Gain: <%= @diagnostic.weight_gain %></li>
+    <li>Facial Hair: <%= @diagnostic.facial_hair %></li>
+    <li>Stress Level: <%= @diagnostic.stress_level %></li>
+    <li>Cramp Intensity: <%= @diagnostic.cramp_intensity %></li>
+    <li>Family History: <%= @diagnostic.family_history %></li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>📅 Recent Logs</h2>
+  <% if @recent_logs.any? %>
+    <% @recent_logs.each do |log| %>
+      <div class="log-entry">
+        <strong><%= log.date.strftime("%B %d, %Y") %>:</strong> <%= log.note %>
+      </div>
+    <% end %>
+  <% else %>
+    <p>No logs found in the last 2 months.</p>
+  <% end %>
+</div>

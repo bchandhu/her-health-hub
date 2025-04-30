@@ -41,7 +41,8 @@
 
   <div style="margin-top: 30px; display: flex; gap: 12px; flex-wrap: wrap;">
     <%= link_to "⬅ Back to Diagnostics", diagnostics_path, class: "btn btn-outline-secondary" %>
-    <%= link_to "📄 Download Report as PDF", report_diagnostic_path(@diagnostic, format: :pdf), class: "btn btn-success" %>
+    <%= link_to "📄 Download Full Report", report_diagnostic_path(@diagnostic, format: :pdf), class: "btn btn-secondary", target: "_blank" %>
+
   </div>
 </div>
 

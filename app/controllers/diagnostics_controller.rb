@@ -65,16 +65,19 @@ class DiagnosticsController < ApplicationController
 
   def report
     @diagnostic = current_user.diagnostic_responses.find(params[:id])
+    @recent_logs = current_user.calendar_entries.where("date >= ?", 2.months.ago).order(date: :desc).limit(10)
   
     respond_to do |format|
+      format.html
       format.pdf do
-        render pdf: "PCOS_Report_#{@diagnostic.id}",
+        render pdf: "HerHealthHub_Report_#{@diagnostic.id}",
                template: "diagnostics/report",
-               layout: false,
-               encoding: "UTF-8"
+               layout: "pdf",
+               formats: [:html]
       end
     end
   end
+  
 
   private
 
