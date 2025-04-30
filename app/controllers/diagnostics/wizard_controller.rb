@@ -43,17 +43,17 @@ class Diagnostics::WizardController < ApplicationController
 
   def process_raw_input_and_gpt
     answers = [
-      "Periods irregular: #{@diagnostic.irregular_periods}",
+      "Irregular periods: #{@diagnostic.irregular_periods}",
+      "Cycle length: #{@diagnostic.cycle_length}",
       "Acne/oily skin: #{@diagnostic.acne}",
       "Weight gain: #{@diagnostic.weight_gain}",
       "Facial hair: #{@diagnostic.facial_hair}",
       "Stress level: #{@diagnostic.stress_level}",
-      "Cycle length: #{@diagnostic.cycle_length}",
       "Cramp intensity: #{@diagnostic.cramp_intensity}",
-      "Family history: #{@diagnostic.family_history}"
+      "Family history of PCOS: #{@diagnostic.family_history}"
     ]
   
-    combined_input = answers.join(". ")
+    combined_input = answers.join("\n")
     @diagnostic.raw_input = combined_input
   
     client = OpenAI::Client.new(access_token: ENV.fetch("OPENAI_ACCESS_TOKEN"))
@@ -63,16 +63,28 @@ class Diagnostics::WizardController < ApplicationController
         parameters: {
           model: "gpt-3.5-turbo",
           messages: [
-            { role: "system", content: "You are a compassionate women's health assistant." },
-            { role: "user", content: "Analyze these symptoms and assess PCOS risk level: #{combined_input}" }
+            {
+              role: "system",
+              content: "You are a compassionate women's health assistant helping users assess their risk for PCOS based on symptoms."
+            },
+            {
+              role: "user",
+              content: <<~PROMPT
+                Below are the user responses to a PCOS risk quiz:
+  
+                #{combined_input}
+  
+                Based on the above, assess the PCOS risk level (Low, Medium, or High) and explain your reasoning clearly in 4–6 lines.
+              PROMPT
+            }
           ],
+          temperature: 0.7
         }
       )
   
       gpt_reply = response.dig("choices", 0, "message", "content")
       @diagnostic.gpt_response = gpt_reply
       @diagnostic.risk_level = extract_risk_level(gpt_reply)
-  
     rescue => e
       @diagnostic.gpt_response = "Sorry, GPT could not process your request."
       @diagnostic.risk_level = "Unknown"
@@ -81,6 +93,7 @@ class Diagnostics::WizardController < ApplicationController
   
     @diagnostic.save!
   end
+  
   
   
   def extract_risk_level(response)
