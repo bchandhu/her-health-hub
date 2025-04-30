@@ -13,6 +13,7 @@
 
 <body class="d-flex flex-column min-vh-100" style="font-family: 'Poppins', sans-serif; margin: 0; padding: 0; background: linear-gradient(to right, #fdfbfb, #ebedee);">
 
+  <!-- Navigation Bar -->
   <nav class="navbar" style="background-color: #ffffff; border-bottom: 1px solid #ddd; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
     <%= link_to "HerHealth Hub 🌸", dashboard_path, style: "text-decoration: none; font-weight: bold; font-size: 24px; color: black;" %>
 
@@ -21,6 +22,7 @@
         <%= link_to "Dashboard", dashboard_path, style: "text-decoration: none; color: #6f42c1;" %>
         <%= link_to "Logs", logs_path, style: "text-decoration: none; color: #6f42c1;" %>
         <%= link_to "Diagnostics", diagnostics_path, style: "text-decoration: none; color: #6f42c1;" %>
+        <%= link_to "📄 Report", report_diagnostics_path(format: :pdf), style: "text-decoration: none; color: #6f42c1;" %>
         <%= link_to "Logout", destroy_user_session_path, method: :delete, style: "text-decoration: none; color: #e63946;" %>
       <% else %>
         <%= link_to "Sign Up", new_user_registration_path, style: "text-decoration: none; color: #6f42c1;" %>
@@ -29,10 +31,13 @@
     </div>
   </nav>
 
-  <main class="flex-grow-1" style="max-width: 1000px; margin: 40px auto; padding: 20px;">
+  <!-- Main Page Content -->
+  <main class="flex-grow-1 d-flex flex-column justify-content-between" style="flex: 1; max-width: 1000px; margin: 40px auto; padding: 20px;">
+
     <%= yield %>
   </main>
 
+  <!-- Sticky Footer -->
   <%= render "shared/footer" %>
 
 </body>

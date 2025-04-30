@@ -69,5 +69,20 @@
       <li><strong>Family history of PCOS:</strong> <%= @diagnostic.family_history %></li>
     </ul>
   </div>
+
+  <div class="divider"></div>
+
+  <div class="section">
+    <h2>📆 Recent Logs (Last 2 Months)</h2>
+    <% if @recent_logs.any? %>
+      <ul>
+        <% @recent_logs.each do |log| %>
+          <li><strong><%= log.date.strftime("%B %d, %Y") %></strong>: <%= log.note %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>No logs found from the past 2 months.</p>
+    <% end %>
+  </div>
 </body>
 </html>

@@ -64,8 +64,20 @@ class DiagnosticsController < ApplicationController
   end
 
   def report
-    @diagnostic = current_user.diagnostic_responses.find(params[:id])
-    @recent_logs = current_user.calendar_entries.where("date >= ?", 2.months.ago).order(date: :desc).limit(10)
+    @diagnostic = if params[:id].present?
+                    current_user.diagnostic_responses.find_by(id: params[:id])
+                  else
+                    current_user.diagnostic_responses.order(created_at: :desc).first
+                  end
+  
+    unless @diagnostic
+      redirect_to diagnostics_path, alert: "Diagnostic not found." and return
+    end
+  
+    @recent_logs = current_user.calendar_entries
+                       .where("date >= ?", 2.months.ago)
+                       .order(date: :desc)
+                       .limit(10)
   
     respond_to do |format|
       format.html
@@ -77,6 +89,7 @@ class DiagnosticsController < ApplicationController
       end
     end
   end
+  
   
 
   private
