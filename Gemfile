@@ -10,6 +10,8 @@ gem 'simple_calendar'
 gem "openai"
 
 gem 'wicked'
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 
 
 
