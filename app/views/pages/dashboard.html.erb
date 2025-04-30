@@ -58,5 +58,14 @@
       <%= button_to "Start New Diagnostic ➔", start_new_diagnostic_diagnostics_path, method: :post, class: "btn-success", style: "margin-top: 10px;" %>
     </div>
   </div>
+  <!-- Health Summary Report Card -->
+  <% if @latest_diagnostic %>
+    <div class="dashboard-card">
+      <h2>📄 Health Summary Report</h2>
+      <p>Download a detailed report including your PCOS risk, GPT assessment, and period logs.</p>
+      <%= link_to "Download PDF Report ➡️", report_diagnostic_path(@latest_diagnostic, format: :pdf), 
+          class: "btn-secondary", target: "_blank", style: "margin-top: 10px;" %>
+    </div>
+  <% end %>
 
 </div>
