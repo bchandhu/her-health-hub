@@ -8,9 +8,11 @@ Rails.application.routes.draw do
   resources :logs
 
   resources :diagnostics do
+    member do
+      get :report
+    end
     collection do
       post :start_new_diagnostic
-      get :report 
     end
     resources :wizard, controller: 'diagnostics/wizard'
   end
