@@ -33,9 +33,10 @@
   <section id="demo-video" style="margin-top: 60px; text-align: center;">
     <h2 style="font-weight: bold; font-size: 26px;">📽️ See It in Action</h2>
     <p style="color: #666;">A quick walkthrough of how HerHealth Hub helps you stay in tune with your cycle.</p>
-    <iframe width="100%" height="400" style="border-radius: 10px; max-width: 700px; margin-top: 20px;"
-            src="https://www.youtube.com/embed/HoU06tSWFxk"
-            frameborder="0" allowfullscreen></iframe>
+    <!-- <video width="100%" height="400" controls style="border-radius: 10px; max-width: 700px; margin-top: 20px;" src="app/assets/videos/video.mp4">-->
+    <video height="360" controls>
+      <source src="<%= asset_path('video.mp4') %>" type="video/mp4">
+    </video>
   </section>
 
   <!-- Testimonials -->

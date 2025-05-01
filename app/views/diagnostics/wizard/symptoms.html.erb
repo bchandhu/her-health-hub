@@ -1,22 +1,22 @@
-<h2>Step 2 of 4: Symptoms</h2>
+<h2 style="font-size: 28px; margin-bottom: 25px;">Step 2 of 4: Symptoms</h2>
 
-<%= form_with model: @diagnostic, url: wizard_path, method: :patch do |form| %>
-  <div>
-    <%= form.label :acne, "Do you have acne or oily skin?" %><br>
-    <%= form.select :acne, ["Yes", "No"] %>
-  </div>
+<div style="max-width: 600px; margin: auto; background: #ffffff; padding: 30px; border-radius: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); font-size: 18px;">
+  <%= form_with model: @diagnostic, url: wizard_path, method: :patch do |form| %>
+    <div style="margin-bottom: 20px;">
+      <%= form.label :acne, "Do you have acne or oily skin?", style: "font-weight: bold;" %><br>
+      <%= form.select :acne, ["Yes", "No"], {}, style: "width: 100%; padding: 10px; font-size: 16px;" %>
+    </div>
 
-  <div style="margin-top: 15px;">
-    <%= form.label :weight_gain, "Are you experiencing weight gain?" %><br>
-    <%= form.select :weight_gain, ["Yes", "No"] %>
-  </div>
+    <div style="margin-bottom: 20px;">
+      <%= form.label :weight_gain, "Are you experiencing weight gain?", style: "font-weight: bold;" %><br>
+      <%= form.select :weight_gain, ["Yes", "No"], {}, style: "width: 100%; padding: 10px; font-size: 16px;" %>
+    </div>
 
-  <div style="margin-top: 15px;">
-    <%= form.label :facial_hair, "Do you have facial hair growth?" %><br>
-    <%= form.select :facial_hair, ["Yes", "No"] %>
-  </div>
+    <div style="margin-bottom: 25px;">
+      <%= form.label :facial_hair, "Do you have facial hair growth?", style: "font-weight: bold;" %><br>
+      <%= form.select :facial_hair, ["Yes", "No"], {}, style: "width: 100%; padding: 10px; font-size: 16px;" %>
+    </div>
 
-  <div style="margin-top: 25px;">
     <%= form.submit "Next ➡️", class: "btn btn-primary" %>
-  </div>
-<% end %>
+  <% end %>
+</div>

@@ -1,22 +1,22 @@
-<h2>Step 3 of 4: Lifestyle & Family</h2>
+<h2 style="font-size: 28px; margin-bottom: 25px;">Step 3 of 4: Lifestyle & Family</h2>
 
-<%= form_with model: @diagnostic, url: wizard_path, method: :patch do |form| %>
-  <div>
-    <%= form.label :stress_level, "Are you often stressed?" %><br>
-    <%= form.select :stress_level, ["Yes", "No"] %>
-  </div>
+<div style="max-width: 600px; margin: auto; background: #ffffff; padding: 30px; border-radius: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); font-size: 18px;">
+  <%= form_with model: @diagnostic, url: wizard_path, method: :patch do |form| %>
+    <div style="margin-bottom: 20px;">
+      <%= form.label :stress_level, "Are you often stressed?", style: "font-weight: bold;" %><br>
+      <%= form.select :stress_level, ["Yes", "No"], {}, style: "width: 100%; padding: 10px; font-size: 16px;" %>
+    </div>
 
-  <div style="margin-top: 15px;">
-    <%= form.label :cramp_intensity, "How intense are your cramps?" %><br>
-    <%= form.select :cramp_intensity, ["None", "Mild", "Moderate", "Severe"] %>
-  </div>
+    <div style="margin-bottom: 20px;">
+      <%= form.label :cramp_intensity, "How intense are your cramps?", style: "font-weight: bold;" %><br>
+      <%= form.select :cramp_intensity, ["None", "Mild", "Moderate", "Severe"], {}, style: "width: 100%; padding: 10px; font-size: 16px;" %>
+    </div>
 
-  <div style="margin-top: 15px;">
-    <%= form.label :family_history, "Do you have a family history of PCOS?" %><br>
-    <%= form.select :family_history, ["Yes", "No", "Not Sure"] %>
-  </div>
+    <div style="margin-bottom: 25px;">
+      <%= form.label :family_history, "Do you have a family history of PCOS?", style: "font-weight: bold;" %><br>
+      <%= form.select :family_history, ["Yes", "No", "Not Sure"], {}, style: "width: 100%; padding: 10px; font-size: 16px;" %>
+    </div>
 
-  <div style="margin-top: 25px;">
     <%= form.submit "Next ➡️", class: "btn btn-primary" %>
-  </div>
-<% end %>
+  <% end %>
+</div>
