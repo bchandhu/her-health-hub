@@ -1,92 +1,109 @@
-# Rails Template
+# HerHealth Hub 🌸
 
-This is a base Ruby on Rails repository configured for learning with Codespaces (and Gitpod).
+## Description
+**HerHealth Hub** is a wellness web application designed to support women managing PCOS/PCOD. It empowers users to assess their hormonal health through an AI-assisted diagnostic quiz, track symptoms, and generate insightful health summaries. Built with empathy and purpose, the platform aims to make early detection and self-awareness more accessible.
 
-- Ruby version: `3.2.1`
-- Rails version: `7.1.3.3`
+---
 
+## Table of Contents
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Troubleshooting](#troubleshooting)
+- [Contributing](#contributing)
+- [ERD](#erd)
+- [License](#license)
+- [Contact Information](#contact-information)
 
-We've added additional Ruby gems and other software that aren't automatically available in a new Rails app, and configured 
+---
 
-### UJS and Turbo
+## Features
+- **PCOS Risk Assessment**: Multi-step wizard form to analyze symptoms and provide AI-generated insights.
+- **Symptom Tracking**: Users can log cycles, cramps, moods, and more using a calendar-based period tracker.
+- **PDF Report Generation**: Download health reports including logs and AI feedback for clinical discussions.
+- **User Authentication**: Devise integration for secure registration and session management.
+- **Responsive Design**: Fully responsive across desktop, tablet, and mobile.
+- **Empathetic UX**: Soft visuals, testimonial highlights, and personal user summaries to build trust and clarity.
 
-In Rails version 7, support for Unobtrusive JavaScript (UJS) is not the default. Rather, [this has been replaced with Turbo](https://guides.rubyonrails.org/working_with_javascript_in_rails.html#turbo).
+---
 
-However, in AppDev, we typically want to first demonstrate UJS and then enable Turbo manually when we want it.
+## Installation
 
-Therefore, UJS has been pre-configured here with these steps: 
-
-- Pin UJS + jQuery in `config/importmap.rb` by running:
-
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/her-health-hub.git
+   cd her-health-hub
+2. Install dependencies:
+    ```bash
+    bundle install
+3. Set up the database:
+    ```bash
+    rails db:create
+    rails db:migrate
+4. Start the Rails server:
+    ```bash
+    rails server
     ```
-    % ./bin/importmap pin @rails/ujs
-    % ./bin/importmap pin jquery
-    ```
 
-- Add UJS + jQuery via:
+## Usage
+- Once the server is running:
+- Visit http://localhost:3000
+- Register or sign in
+- Start the diagnostic wizard or add logs from the dashboard
+- Download your PCOS summary report as a PDF anytime
 
-    ```js
-    // app/javascript/application.js
-    import jquery from "jquery";
-    window.jQuery = jquery;
-    window.$ = jquery;
-    import Rails from "@rails/ujs"
-    Rails.start();
-    ```
+## Troubleshooting
 
-UJS and Turbo can co-exist side-by-side with [these instructions, which we already implemented here](https://github.com/hotwired/turbo-rails/blob/main/UPGRADING.md#upgrading-from-rails-ujs--turbolinks-to-turbo).
+### Database not working?
+Try:
+   ```bash
+   rails db:reset
+   rails db:migrate
+   ```
 
-By default, Turbo is disabled via:
+### Missing gems?
+Try:
+   ```bash
+   bundle install
+   bundle update
+   ```
 
-```js
-// app/javascript/application.js
-import { Turbo } from "@hotwired/turbo-rails"
-Turbo.session.drive = false
-```
+### Video/testimonials not loading?
+Try: 
+   ```bash
+   rails assets:precompile
+   ```
+## Contributing
+Contributions are welcome!
 
-Set it to `true` to enable Turbo everywhere, or you can use `data-turbo="true"` to enable Drive on a per-element basis while leaving it globally `false`.
+Fork the repository
 
-### Additional gems:
+Create a new branch:
+   ```bash
+   git checkout -b feature-name
+   ```
 
-- [`appdev_support`](https://github.com/firstdraft/appdev_support)
-- [`annotate`](https://github.com/ctran/annotate_models)
-- [`awesome_print`](https://github.com/awesome-print/awesome_print)
-- [`better_errors`](https://github.com/BetterErrors/better_errors)
-- [`binding_of_caller`](https://github.com/banister/binding_of_caller)
-- [`dotenv-rails`](https://github.com/bkeepers/dotenv)
-- [`draft_generators`](https://github.com/firstdraft/draft_generators/)
-- [`draft_matchers`](https://github.com/jelaniwoods/draft_matchers/)
-- [`devise`](https://github.com/heartcombo/devise)
-- [`faker`](https://github.com/faker-ruby/faker)
-- [`grade_runner`](https://github.com/firstdraft/grade_runner/)
-- [`htmlbeautifier`](https://github.com/threedaymonk/htmlbeautifier/)
-- [`http`](https://github.com/httprb/http)
-- [`pry_rails`](https://github.com/pry/pry-rails)
-- [`rails_db`](https://github.com/igorkasyanchuk/rails_db)
-- [`rails-erd`](https://github.com/voormedia/rails-erd)
-- [`rspec-html-matchers`](https://github.com/kucaahbe/rspec-html-matchers)
-- [`rspec-rails`](https://github.com/rspec/rspec-rails)
-- [`rufo`](https://github.com/ruby-formatter/rufo)
-- [`specs_to_readme`](https://github.com/firstdraft/specs_to_readme)
-- [`table_print`](https://github.com/arches/table_print)
-- [`web_git`](https://github.com/firstdraft/web_git)
-- [`webmock`](https://github.com/bblimke/webmock)
+Commit your changes:
+   ```bash
+   git commit -m 'Added X feature'
+   ```
 
-### Additional software:
-- OS Ubuntu 20.04.5 LTS
-- Chromedriver
-- Fly.io's `flyctl`
-- Google Chrome (headless browser)
-- Graphviz
-- Node JS 18
-- NPM 8.19.3
-- Postgresql 12
-- Redis
-- Yarn
+Push to your branch:
+   ```bash
+   git push origin feature-name
+   ```
 
-### VS Code extensions:
-- vortizhe.simple-ruby-erb
-- mbessey.vscode-rufo
-- aliariff.vscode-erb-beautify
-- eamodio.gitlens
-- setobiralo.erb-commenter
+Open a pull request
+
+## ERD
+![erd](image.png)
+
+## License
+
+HerHealth Hub is licensed under the Chandhu Bhumireddy.
+
+## Contact Information
+
+- Chandhu Bhumireddy
+- chandhub108@gmail.com
+- Project Link: https://github.com/bchandhu/her-health-hub
