@@ -95,6 +95,25 @@ Push to your branch:
 
 Open a pull request
 
+## Visual Aids
+Here are some visual aids to help you quickly understand the structure and flow of the app:
+
+### The Landing page
+![alt text](image-1.png)
+
+![alt text](image-2.png)
+
+### Dashboard page
+![alt text](image-3.png)
+
+### Diagnostic page
+![alt text](image-4.png)
+
+### Logs page
+![alt text](image-5.png)
+
+### Pdf 
+
 ## ERD
 ![erd](image.png)
 
