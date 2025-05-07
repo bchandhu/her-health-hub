@@ -3,14 +3,18 @@
 ## Description
 **HerHealth Hub** is a wellness web application designed to support women managing PCOS/PCOD. It empowers users to assess their hormonal health through an AI-assisted diagnostic quiz, track symptoms, and generate insightful health summaries. Built with empathy and purpose, the platform aims to make early detection and self-awareness more accessible.
 
+**Deployed Url:** https://her-health-hub.onrender.com
+
 ---
 
 ## Table of Contents
 - [Features](#features)
 - [Installation](#installation)
+- [API Documentation](#api-documentation)
 - [Usage](#usage)
 - [Troubleshooting](#troubleshooting)
 - [Contributing](#contributing)
+- [Visual Aids](#visual-aids)
 - [ERD](#erd)
 - [License](#license)
 - [Contact Information](#contact-information)
@@ -44,6 +48,14 @@
     ```bash
     rails server
     ```
+## API Documentation
+This app uses the OpenAI GPT-4o API to generate personalized PCOS risk summaries.
+
+### External API
+Provider: OpenAI
+
+### Authentication:
+Requires a Bearer token using your OpenAI API Key (OPENAI_ACCESS_TOKEN)
 
 ## Usage
 - Once the server is running:
@@ -108,18 +120,21 @@ Here are some visual aids to help you quickly understand the structure and flow 
 
 ### Diagnostic page
 ![alt text](image-4.png)
+![alt text](image-6.png)
 
 ### Logs page
 ![alt text](image-5.png)
 
-### Pdf 
+### Pdf report
+![alt text](image-7.png)
+
 
 ## ERD
 ![erd](image.png)
 
 ## License
 
-HerHealth Hub is licensed under the Chandhu Bhumireddy.
+HerHealth Hub is licensed under Chandhu Bhumireddy.
 
 ## Contact Information
 
