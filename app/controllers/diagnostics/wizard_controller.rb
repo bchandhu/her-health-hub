@@ -1,8 +1,9 @@
 require "openai"
 require "dotenv/load"
+
 class Diagnostics::WizardController < ApplicationController
   include Wicked::Wizard
-
+  # NOTE: authenticate_user! is not set, therefore not doing anything
   before_action :authenticate_user!
   before_action :set_diagnostic
 
@@ -41,6 +42,7 @@ class Diagnostics::WizardController < ApplicationController
     )
   end
 
+  # NOTE: This method `process_raw_input_and_gpt` and `extract_risk_level()` could go into the model, or a concern
   def process_raw_input_and_gpt
     answers = [
       "Irregular periods: #{@diagnostic.irregular_periods}",
@@ -50,14 +52,14 @@ class Diagnostics::WizardController < ApplicationController
       "Facial hair: #{@diagnostic.facial_hair}",
       "Stress level: #{@diagnostic.stress_level}",
       "Cramp intensity: #{@diagnostic.cramp_intensity}",
-      "Family history of PCOS: #{@diagnostic.family_history}"
+      "Family history of PCOS: #{@diagnostic.family_history}",
     ]
-  
+
     combined_input = answers.join("\n")
     @diagnostic.raw_input = combined_input
-  
+
     client = OpenAI::Client.new(access_token: ENV.fetch("OPENAI_ACCESS_TOKEN"))
-  
+
     begin
       response = client.chat(
         parameters: {
@@ -65,23 +67,23 @@ class Diagnostics::WizardController < ApplicationController
           messages: [
             {
               role: "system",
-              content: "You are a compassionate women's health assistant helping users assess their risk for PCOS based on symptoms."
+              content: "You are a compassionate women's health assistant helping users assess their risk for PCOS based on symptoms.",
             },
             {
               role: "user",
-              content: <<~PROMPT
+              content: <<~PROMPT,
                 Below are the user responses to a PCOS risk quiz:
-  
+                
                 #{combined_input}
-  
+                
                 Based on the above, assess the PCOS risk level (Low, Medium, or High) and explain your reasoning clearly in 4–6 lines.
               PROMPT
-            }
+            },
           ],
-          temperature: 0.7
-        }
+          temperature: 0.7,
+        },
       )
-  
+
       gpt_reply = response.dig("choices", 0, "message", "content")
       @diagnostic.gpt_response = gpt_reply
       @diagnostic.risk_level = extract_risk_level(gpt_reply)
@@ -90,12 +92,10 @@ class Diagnostics::WizardController < ApplicationController
       @diagnostic.risk_level = "Unknown"
       Rails.logger.error("GPT error: #{e.message}")
     end
-  
+
     @diagnostic.save!
   end
-  
-  
-  
+
   def extract_risk_level(response)
     case response.downcase
     when /high/ then "High"
