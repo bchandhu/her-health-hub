@@ -3,6 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.2.1"
 
+# NOTE: Duplicate devise gem
 gem 'devise'
 gem 'dotenv-rails'
 gem "ruby-openai"

@@ -24,6 +24,4 @@ class Log < ApplicationRecord
   def start_time
     date
   end
-  
-
 end

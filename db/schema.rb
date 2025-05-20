@@ -10,35 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_04_29_212403) do
+ActiveRecord::Schema[7.1].define(version: 2025_05_13_212101) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "diagnostics", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.text "raw_input"
-    t.text "gpt_response"
-    t.string "risk_level"
+  create_table "boards", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "irregular_periods"
-    t.string "cycle_length"
-    t.string "acne"
-    t.string "weight_gain"
-    t.string "facial_hair"
-    t.string "stress_level"
-    t.string "cramp_intensity"
-    t.string "family_history"
-    t.index ["user_id"], name: "index_diagnostics_on_user_id"
+    t.integer "user_id"
   end
 
-  create_table "logs", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.date "date"
-    t.text "note"
+  create_table "posts", force: :cascade do |t|
+    t.string "title"
+    t.text "body"
+    t.date "expires_on"
+    t.integer "board_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_logs_on_user_id"
+    t.integer "user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -47,15 +37,10 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_29_212403) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "first_name"
-    t.string "last_name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "diagnostics", "users"
-  add_foreign_key "logs", "users"
 end

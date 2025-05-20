@@ -16,7 +16,6 @@ class LogsController < ApplicationController
     @log = current_user.calendar_entries.build
     @log.date = params[:date] if params[:date].present?
   end
-  
 
   # GET /logs/1/edit
   def edit
@@ -61,11 +60,11 @@ class LogsController < ApplicationController
 
   private
 
-    def set_log
-      @log = current_user.calendar_entries.find(params[:id])
-    end
+  def set_log
+    @log = current_user.calendar_entries.find(params[:id])
+  end
 
-    def log_params
-      params.require(:log).permit(:date, :note)
-    end
+  def log_params
+    params.require(:log).permit(:date, :note)
+  end
 end

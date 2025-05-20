@@ -63,22 +63,23 @@ class DiagnosticsController < ApplicationController
     end
   end
 
+  # NOTE: This method could go into the report model as well
   def report
     @diagnostic = if params[:id].present?
-                    current_user.diagnostic_responses.find_by(id: params[:id])
-                  else
-                    current_user.diagnostic_responses.order(created_at: :desc).first
-                  end
-  
+        current_user.diagnostic_responses.find_by(id: params[:id])
+      else
+        current_user.diagnostic_responses.order(created_at: :desc).first
+      end
+
     unless @diagnostic
       redirect_to diagnostics_path, alert: "Diagnostic not found." and return
     end
-  
+
     @recent_logs = current_user.calendar_entries
-                       .where("date >= ?", 2.months.ago)
-                       .order(date: :desc)
-                       .limit(10)
-  
+      .where("date >= ?", 2.months.ago)
+      .order(date: :desc)
+      .limit(10)
+
     respond_to do |format|
       format.html
       format.pdf do
@@ -89,16 +90,14 @@ class DiagnosticsController < ApplicationController
       end
     end
   end
-  
-  
 
   private
 
-    def set_diagnostic
-      @diagnostic = current_user.diagnostic_responses.find(params[:id])
-    end
+  def set_diagnostic
+    @diagnostic = current_user.diagnostic_responses.find(params[:id])
+  end
 
-    def diagnostic_params
-      params.require(:diagnostic).permit(:raw_input, :gpt_response, :risk_level)
-    end
+  def diagnostic_params
+    params.require(:diagnostic).permit(:raw_input, :gpt_response, :risk_level)
+  end
 end
